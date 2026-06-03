@@ -4,3 +4,5 @@ headers_input.txt
 browser.json
 debugging/
 __pycache__/
+.env
+.cache
