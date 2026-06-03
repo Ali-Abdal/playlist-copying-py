@@ -1,1 +1,6 @@
 venv/
+steps.txt
+headers_input.txt
+browser.json
+debugging/
+__pycache__/
