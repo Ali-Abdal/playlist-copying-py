@@ -1,5 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+import re
 
 
 class Spotify:
@@ -14,17 +15,27 @@ class Spotify:
             )
         )
 
-    # not finished you need also to clean track names
-    def get_track_uris(self, songs):
+    def clean_title(self, title):
+        title = re.sub(r"\(.*?\)", "", title)
+        title = re.sub(r"\[.*?\]", "", title)
+        return title.strip()
+
+    def search_track(self, title, artist):
+        title = self.clean_title(title)
+        query = f"{title} {artist}"
+        result = self.sp.search(q=query, type="track", limit=1)
+        return result
+
+    def get_tracks_uris(self, songs):
         uris = []
 
         for s in songs:
             title = s["title"]
             artist = s["artist"]
-            query = f"{title} {artist}"
+            result = self.search_track(title, artist)
+            items = result["tracks"]["items"]
+            if items:
+                uri = items[0]["uri"]
+                uris.append(uri)
 
-            result = self.sp.search(q=query, type="track", limit=1)
-            print(result)
-            break
-
-        # return uris
+        return uris

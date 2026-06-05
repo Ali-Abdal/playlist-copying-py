@@ -6,3 +6,4 @@ debugging/
 __pycache__/
 .env
 .cache
+playlist.txt

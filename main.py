@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 
 def main():
-    print("===Starting Programm===")  # debug messages
+    print("===Starting Programm===\n\n")  # debug messages
 
     # makes sure browser.json exists
     try:
@@ -14,7 +14,6 @@ def main():
             pass
     except FileNotFoundError:
         init_browserjson()
-        return
 
     yt = Youtube()
 
@@ -27,14 +26,43 @@ def main():
         print("Error: Missing Spotify credentials in .env file.")
         return
 
-    # testing
-    sp = Spotify(client_id, client_secret)
+    playlists = yt.get_playlists()
 
-    playlistID = "PLDCMizaqqwzEN0-wl2Vz8zrrX-uArANP5"
-    songs = yt.get_songs(playlistID=playlistID)
+    print("====== Playlists ======\n")
 
-    sp.get_track_uris(songs)
-    #
+    playlist_titles = [p["title"] for p in playlists]
+
+    for t in playlist_titles:
+        print(t)
+
+    print("=======================\n")
+
+    while True:
+        print(
+            "====== Options ======\nEnter exact playlist name to copy\nq to quit\n======================="
+        )
+        user_input = input(">>> ")
+
+        if user_input == "q":
+            exit()
+
+        if user_input in playlist_titles:
+            sp = Spotify(client_id, client_secret)
+
+            for p in playlists:
+                if user_input == p["title"]:
+                    playlistID = p["playlistId"]
+
+            songs = yt.get_songs(playlistID=playlistID)
+
+            uris = sp.get_tracks_uris(songs)
+
+            with open("playlist.txt", "w") as fh:
+                for uri in uris:
+                    fh.write(uri + "\n")
+
+            print("Done! Open playlist.txt and paste into Spotify.")
+            exit()
 
 
 # Creats the browser.json file from input in headers_input.text
