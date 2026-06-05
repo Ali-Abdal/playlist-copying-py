@@ -28,6 +28,12 @@ def main():
 
     playlists = yt.get_playlists()
 
+    if not playlists:
+        print(
+            "Make sure that you have playlists and that your YT headers didn't expire."
+        )
+        exit()
+
     print("====== Playlists ======\n")
 
     playlist_titles = [p["title"] for p in playlists]
