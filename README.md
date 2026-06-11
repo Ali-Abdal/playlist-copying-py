@@ -74,7 +74,7 @@ python main.py
 2. Your YouTube Music playlists will be displayed in the terminal
 3. Enter the name of the playlist you want to copy when prompted
 4. Wait for the app to search Spotify for each track
-5. Open `playlist.txt` — it will contain all found Spotify URIs
+5. Open `playlist.txt` it will contain all found Spotify URIs
 6. Open the **Spotify desktop app** and create a new empty playlist
 7. Select all URIs in `playlist.txt` (`Ctrl+A` then `Ctrl+C`)
 8. Click on your new playlist and press `Ctrl+V` to paste
